@@ -82,35 +82,10 @@ export namespace central_tendency
         ranges::copy(data, back_inserter(sorted));
 
         ranges::sort(sorted);
-        auto [first, last] {std::ranges::unique(sorted)};
-        sorted.erase(first, last);
-
-        auto mode = std::pair<T, size_t>{ data[0],T{} };
-        for (auto item : sorted)
-        {
-            const auto counted{ ranges::count_if(data, [&item](auto i) {return item == i; }) };
-            std::cout << item << "  " << counted << std::endl;
-            if (counted > mode.second || mode.second == T{})
-                mode = std::pair{ item, counted };
-        }
-
-        return mode.first;
-    }
-    template <typename T> T mode(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
-    {
-        if (data.empty())
-            return std::numeric_limits<T>::quiet_NaN();
-
-        using Items = std::vector<T>;
-        Items sorted;
-        ranges::copy(data, back_inserter(sorted));
-
-        ranges::sort(sorted);
-        auto [first, last] {std::ranges::unique(sorted)};
+        auto [first, last] {ranges::unique(sorted)};
         sorted.erase(first, last);
 
         std::multimap<size_t, T> countedData;
-        auto mode = std::pair<T, size_t>{ data[0],T{} };
         for (auto item : sorted)
         {
             const auto counted{ ranges::count_if(data, [&item](auto i) {return item == i; }) };
@@ -124,6 +99,35 @@ export namespace central_tendency
         }
         return (countedData.crbegin())->second;
     }
+
+    template <typename T> T mode(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
+    {
+        if (data.empty())
+            return std::numeric_limits<T>::quiet_NaN();
+
+        using Items = std::vector<T>;
+        Items dataCopy;
+        ranges::copy(data, back_inserter(dataCopy));
+
+        ranges::sort(dataCopy);
+        auto [first, last] {ranges::unique(dataCopy)};
+        dataCopy.erase(first, last);
+
+        std::multimap<size_t, T> countedData;
+        for (auto item : dataCopy)
+        {
+            const auto counted{ ranges::count_if(data, [&item](auto i) {return item == i; }) };
+            countedData.emplace(std::make_pair(counted, item));
+        }
+
+        if (countedData.size() != 1)
+        {
+            if ((countedData.crbegin())->first == (++countedData.crbegin())->first)
+                return std::numeric_limits<T>::quiet_NaN();
+        }
+        return (countedData.crbegin())->second;
+    }
+
 
     void test();
     void test_int();
