@@ -22,6 +22,8 @@
     <ClCompile Include="central_tendency.cpp" />
     <ClCompile Include="central_tendency.cppm" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mappings.cpp" />
+    <ClCompile Include="mappings.cppm" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
