@@ -5,19 +5,19 @@ module central_tendency;
 import <iostream>;
 #include <cassert>
 
-bool compare_float(double x, double y, double epsilon = 0.01) {
-    return (fabs(x - y) < epsilon);
-}
-
-void print(auto&& r) {
-    std::cout << "\nRange:  ";
-    for (auto i : r)
-        std::cout << i << "  ";
-    std::cout << std::endl;
-}
-
 namespace central_tendency
 {
+    void print(auto&& r) {
+        std::cout << "\nRange:  ";
+        for (auto i : r)
+            std::cout << i << "  ";
+        std::cout << std::endl;
+    }
+
+  bool compare_float(double x, double y, double epsilon = 0.01) {
+        return (fabs(x - y) < epsilon);
+  }
+
   void averages::test()
   {
       test_int();

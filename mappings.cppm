@@ -1,6 +1,7 @@
 export module mappings;
 
 import <span>;
+import <string>;
 import <map>;
 import <vector>;
 import <iostream>;
@@ -19,12 +20,14 @@ namespace views =  std::ranges::views;
 export namespace mappings
 {
 
-  namespace averages
+  namespace basic
   {
 
+      auto toString();
+      
 
 
-    void test();
+      void test();
 
   }
 }
