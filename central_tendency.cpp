@@ -10,6 +10,7 @@ bool compare_float(double x, double y, double epsilon = 0.01) {
 }
 
 void print(auto&& r) {
+    std::cout << "\nRange:  ";
     for (auto i : r)
         std::cout << i << "  ";
     std::cout << std::endl;
@@ -50,8 +51,24 @@ namespace central_tendency
       assert(mode == 1);
 
       const int values2[]{ 1,8, 14, 3, 4, 8, 21, 3 };
-      std::cout << "************************" << std::endl;
       print(values2);
+
+      double amean2{ central_tendency::averages::arithmeticMean<int>(values2) };
+      assert(amean2 == 7.75);
+      std::cout << "Arithmetic mean: " << amean2 << std::endl;
+
+      double gmean2{ central_tendency::averages::geometricMean<int>(values2) };
+      assert(compare_float(gmean2, 5.35616));
+      std::cout << "Geometric mean: " << gmean2 << std::endl;
+
+      double root_mean_square2{ central_tendency::averages::rms<int>(values2) };
+      std::cout << "Root mean square: " << root_mean_square2 << std::endl;
+      assert(compare_float(root_mean_square2, 10.));
+
+      auto median2{ central_tendency::averages::median<int>(values2) };
+      std::cout << "Median: " << median2 << std::endl;
+      assert(compare_float(median2, 6.));
+
       auto mode2{ central_tendency::averages::mode<int>(values2) };
       assert(mode2 == std::numeric_limits<int>::quiet_NaN());
       std::cout << "Mode is not unique" << std::endl;
@@ -83,8 +100,15 @@ namespace central_tendency
       assert(compare_float(mode, 10.30000));
 
       const double values2[]{ 2.345 };
-      std::cout << "************************" << std::endl;
       print(values2);
+      auto amean2{ central_tendency::averages::arithmeticMean<double>(values2) };
+      std::cout << "Arithmetic mean: " << amean2 << std::endl;
+      auto gmean2{ central_tendency::averages::geometricMean<double>(values2) };
+      std::cout << "Geometric mean: " << gmean2 << std::endl;
+      auto root_mean_square2{ central_tendency::averages::rms<double>(values2) };
+      std::cout << "Root mean square: " << root_mean_square2 << std::endl;
+      auto median2{ central_tendency::averages::median<double>(values2) };
+      std::cout << "Median: " << median2 << std::endl;
       auto mode2{ central_tendency::averages::mode<double>(values2) };
       std::cout << "Mode: " << mode2 << std::endl;
       assert(compare_float(mode2, 2.345));

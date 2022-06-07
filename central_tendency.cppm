@@ -72,34 +72,6 @@ export namespace central_tendency
             : (sorted[mid - 1] + sorted[mid]) / 2.0;
     }
 
-    template <typename T> T mode_old(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
-    {
-        if (data.empty())
-            return std::numeric_limits<T>::quiet_NaN();
-
-        using Items = std::vector<T>;
-        Items sorted;
-        ranges::copy(data, back_inserter(sorted));
-
-        ranges::sort(sorted);
-        auto [first, last] {ranges::unique(sorted)};
-        sorted.erase(first, last);
-
-        std::multimap<size_t, T> countedData;
-        for (auto item : sorted)
-        {
-            const auto counted{ ranges::count_if(data, [&item](auto i) {return item == i; }) };
-            countedData.emplace(std::make_pair(counted, item));
-        }
-      
-        if (countedData.size() != 1)
-        {
-            if ((countedData.crbegin())->first == (++countedData.crbegin())->first)
-                return std::numeric_limits<T>::quiet_NaN();
-        }
-        return (countedData.crbegin())->second;
-    }
-
     template <typename T> T mode(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
     {
         if (data.empty())
