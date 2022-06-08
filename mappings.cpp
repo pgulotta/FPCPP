@@ -13,17 +13,22 @@ import <string_view>;
 
 namespace mappings
 {
-    void printRange(std::string_view message, const auto& range)
+    void printPairs(std::string_view message, const auto& pairs)
     {
-        std::cout << "printRange  " << message;
-        for (const auto& value : range) { std::cout << value; }
+        std::cout << std::endl  << message << std::endl;
+        for (const auto& pair : pairs) {
+            std::cout << pair.first << "  " << pair.second << std::endl;
+        }
         std::cout << std::endl;
     }
 
-    void print(const auto&& r) {
-        std::cout << "\nRange:  ";
-        for (auto i : r)
-            std::cout << i << "  ";
+    void printRange(std::string_view message, const auto& range)
+    {
+        std::cout << std::endl << message << std::endl;
+        for (const auto& value : range) 
+        { 
+            std::cout << value; 
+        }
         std::cout << std::endl;
     }
 
@@ -33,21 +38,38 @@ namespace mappings
         std::cout << std::endl << text << std::endl;
     }
 
+    //void print(const auto&& r) {
+    //    std::cout << std::endl;
+    //    for (auto i : r)
+    //        std::cout << i << "  ";
+    //    std::cout << std::endl;
+    //}
+
     auto basic::toString()
     {
-        auto s =
-          std::views::iota(10)
-          | std::ranges::views::take(15)
-          | std::ranges::views::transform([](int x) -> std::string {
-              return std::to_string(x) + "|"; }) ;
-
-              return s;
+        return 
+            std::views::iota(1)
+            | std::ranges::views::take(123)
+            | std::ranges::views::transform([](int x) -> std::string {
+            return std::to_string(x) + " "; });
     }
+
+    auto basic::squaredPair()
+    {
+        return
+            std::views::iota(10)
+            | std::ranges::views::take(25)
+            | std::ranges::views::transform([](int x) -> std::pair<int, float> {
+                return std::make_pair(x, sqrt(x));
+                });
+    }
+
 
   void basic::test()
   {
       std::cout << std::endl  << "Start mappings test" << std::endl;
       printRange("toString result:  " ,toString() );
+      printPairs("squaredPair result:  " , squaredPair() );
   }
 
 }

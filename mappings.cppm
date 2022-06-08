@@ -22,8 +22,8 @@ export namespace mappings
 
   namespace basic
   {
-
       auto toString();
+      auto squaredPair();
       
 
 
