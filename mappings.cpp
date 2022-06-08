@@ -22,10 +22,10 @@ namespace mappings
         std::cout << std::endl;
     }
 
-    void printRange(std::string_view message, const auto& range)
+    void printRange(std::string_view message, const auto& r)
     {
         std::cout << std::endl << message << std::endl;
-        for (const auto& value : range) 
+        for (const auto& value : r) 
         { 
             std::cout << value; 
         }
@@ -38,13 +38,6 @@ namespace mappings
         std::cout << std::endl << text << std::endl;
     }
 
-    //void print(const auto&& r) {
-    //    std::cout << std::endl;
-    //    for (auto i : r)
-    //        std::cout << i << "  ";
-    //    std::cout << std::endl;
-    //}
-
     auto basic::toString()
     {
         return 
@@ -54,7 +47,7 @@ namespace mappings
             return std::to_string(x) + " "; });
     }
 
-    auto basic::squaredPair()
+    auto basic::squareRootPair()
     {
         return
             std::views::iota(10)
@@ -64,12 +57,22 @@ namespace mappings
                 });
     }
 
+    auto basic::squareRoot(const auto& r)
+    {
+        return
+            r
+            | std::ranges::views::take(25)
+            | std::ranges::views::transform([](int x) -> std::pair<int, float> {
+                return std::make_pair(x, sqrt(x));
+                });
+    }
 
   void basic::test()
   {
       std::cout << std::endl  << "Start mappings test" << std::endl;
       printRange("toString result:  " ,toString() );
-      printPairs("squaredPair result:  " , squaredPair() );
+      printPairs("squareRootPair result:  " , squareRootPair() );
+      printPairs("squareRoot result:  " , squareRoot(std::views::iota(100)) );
   }
 
 }
