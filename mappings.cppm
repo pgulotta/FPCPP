@@ -23,8 +23,7 @@ export namespace mappings
   namespace basic
   {
       auto toString();
-      auto squareRootPair();
-      auto squareRoot(const auto& r);
+      auto squareRoot(const auto& r, int count);
 
 
       void test();
