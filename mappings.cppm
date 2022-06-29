@@ -23,9 +23,9 @@ export namespace mappings
   namespace basic
   {
       auto toString();
-      auto squareRoot(const auto& r, int count);
-
-
+      auto squareRoot(const auto& rng, int count);
+      const auto& occurences(const std::vector<int>& rng);
+      std::multimap<int, int> occurencesCount(const std::vector<int>& rng);
       void test();
 
   }
