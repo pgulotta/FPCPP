@@ -2,20 +2,12 @@ module;
 
 module mappings;
 
+import <string>;
+import <map>;
+import <vector>;
 import <ranges>;
 import <iostream>;
-import <algorithm>;
-import <string>;
 import <format>;
-import <iterator>;
-import <string_view>;
-import <vector>;
-import <functional>;
-import <utility>;
-
-// The mean(average) of a data set is found by adding all numbers in the data setand then dividing by the number of values in the set.
-// The median is the middle value when a data set is ordered from least to greatest.
-// The mode is the number that occurs most often in a data set.
 
 #include <cassert>
 
@@ -84,7 +76,7 @@ namespace mappings
         auto [first, last] {ranges::unique(dataCopy)};
         dataCopy.erase(first, last);
         auto counts =
-            dataCopy | views::transform([&rng](int x) -> std::pair<int, int> {
+            dataCopy | views::transform([&rng](auto x) -> std::pair<int, int> {
             return std::make_pair(
                 ranges::count_if(rng, [&x](auto i) {return x == i; }),  x);
                 }) 
@@ -102,9 +94,7 @@ namespace mappings
     {
         std::cout << std::endl << "Start mappings test" << std::endl;
         printPairs("occurencesCount:  ", occurencesCount(std::vector<int> { 21, 3, 1,8, 14, 3, 4, 8, 21, 3,9 }));
-        printPairs("occurencesCount:  ", occurencesCount(std::vector<int>{1,2,3,4,5}));
-
-
+  
     }
 
 }

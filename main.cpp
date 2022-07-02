@@ -4,7 +4,8 @@ import mappings;
 
 int main()
 {
-	central_tendency::averages::test();
 	mappings::basic::test();
+	central_tendency::averages::test();
+
 }
 

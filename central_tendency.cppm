@@ -4,17 +4,18 @@ import <span>;
 import <map>;
 import <vector>;
 import <iostream>;
-import <limits>;   // For std::numeric_limits<double>::quiet_NaN()
+import <limits>;   // For std::numeric_limits<T>::quiet_NaN()
 import <ranges>;
-import <string_view>;
 import <algorithm>;
-import <functional>;
-import <utility>;
-
-#include <cmath>  // For std::pow(), std::sqrt(), ...
 
 namespace ranges = std::ranges;
 namespace views =  std::ranges::views;
+
+
+// The mean(average) of a data set is found by adding all numbers in the data setand then dividing by the number of values in the set.
+// The median is the middle value when a data set is ordered from least to greatest.
+// The mode is the number that occurs most often in a data set.
+
 
 export namespace central_tendency
 {
@@ -30,7 +31,7 @@ export namespace central_tendency
             sum_squares += square(value);
 
         return data.empty()
-            ? std::numeric_limits<double>::quiet_NaN() 
+            ? std::numeric_limits<T>::quiet_NaN() 
             : std::sqrt(sum_squares / (double)data.size());
     }
 
@@ -42,7 +43,7 @@ export namespace central_tendency
             product *= value;
 
         return data.empty()
-            ? std::numeric_limits<int>::quiet_NaN()
+            ? std::numeric_limits<T>::quiet_NaN()
             : std::pow(product, 1.0 / (double)data.size());
     }
 
@@ -67,7 +68,7 @@ export namespace central_tendency
         ranges::sort(sorted);
 
         const size_t mid = data.size() / 2;
-        return data.empty() ? std::numeric_limits<int>::quiet_NaN()
+        return data.empty() ? std::numeric_limits<T>::quiet_NaN()
             : data.size() % 2 == 1 ? sorted[mid]
             : (sorted[mid - 1] + sorted[mid]) / 2.0;
     }
@@ -96,7 +97,7 @@ export namespace central_tendency
         if (counted.size() != 1)
         {
             if ((counted.crbegin())->first == (++counted.crbegin())->first)
-                return std::numeric_limits<T>::quiet_NaN();
+                 return std::numeric_limits<T>::signaling_NaN();
         }
         return (counted.crbegin())->second;
     }

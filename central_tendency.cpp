@@ -112,7 +112,7 @@ namespace central_tendency
       auto mode2{ central_tendency::averages::mode<double>(values2) };
       std::cout << "Mode: " << mode2 << std::endl;
       assert(compare_float(mode2, 2.345));
-
+   
   }
 }
 
