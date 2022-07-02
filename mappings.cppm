@@ -24,8 +24,7 @@ export namespace mappings
   {
       auto toString();
       auto squareRoot(const auto& rng, int count);
-      const auto& occurences(const std::vector<int>& rng);
-      std::multimap<int, int> occurencesCount(const std::vector<int>& rng);
+      auto occurencesCount(const auto& rng);
       void test();
 
   }

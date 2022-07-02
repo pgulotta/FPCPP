@@ -77,29 +77,29 @@ export namespace central_tendency
         if (data.empty())
             return std::numeric_limits<T>::quiet_NaN();
 
-        using Items = std::vector<T>;
-        Items dataCopy;
-        ranges::copy(data, back_inserter(dataCopy));
-
+        std::vector<T> dataCopy;
+        ranges::copy(data, std::back_inserter(dataCopy));
         ranges::sort(dataCopy);
         auto [first, last] {ranges::unique(dataCopy)};
         dataCopy.erase(first, last);
+        auto counts =
+            dataCopy | views::transform([&data](T x) -> std::pair<int, T> {
+            return std::make_pair(
+                ranges::count_if(data, [&x](auto i) {return x == i; }), x);
+                });
 
-        std::multimap<size_t, T> countedData;
-        for (auto item : dataCopy)
-        {
-            const auto counted{ ranges::count_if(data, [&item](auto i) {return item == i; }) };
-            countedData.emplace(std::make_pair(counted, item));
+        std::multimap<int, T> counted;
+        for (const auto& pair : counts) {
+            counted.emplace(pair.first, pair.second);
         }
 
-        if (countedData.size() != 1)
+        if (counted.size() != 1)
         {
-            if ((countedData.crbegin())->first == (++countedData.crbegin())->first)
+            if ((counted.crbegin())->first == (++counted.crbegin())->first)
                 return std::numeric_limits<T>::quiet_NaN();
         }
-        return (countedData.crbegin())->second;
+        return (counted.crbegin())->second;
     }
-
 
     void test();
     void test_int();

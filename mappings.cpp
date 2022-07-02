@@ -13,7 +13,9 @@ import <vector>;
 import <functional>;
 import <utility>;
 
-
+// The mean(average) of a data set is found by adding all numbers in the data setand then dividing by the number of values in the set.
+// The median is the middle value when a data set is ordered from least to greatest.
+// The mode is the number that occurs most often in a data set.
 
 #include <cassert>
 
@@ -72,12 +74,11 @@ namespace mappings
 
     }
 
-    std::multimap <int, int> basic::occurencesCount(const std::vector<int>& rng)
+    auto basic::occurencesCount(const auto& rng)
     {
         std::multimap<int, int> counted;
-        
-        // typename std::remove_const<decltype(rng)>::type  dataCopy;
         std::vector<int> dataCopy;
+
         ranges::copy(rng, std::back_inserter(dataCopy));
         ranges::sort(dataCopy);
         auto [first, last] {ranges::unique(dataCopy)};
