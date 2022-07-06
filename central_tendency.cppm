@@ -32,20 +32,20 @@ export namespace central_tendency
             sum_squares += square(value);
 
         return data.empty() ? 
-            std::nullopt : 
+           std::nullopt : 
            std:: optional<double>( std::sqrt(sum_squares / (double)data.size()));
     }
 
-    template <typename T> double geometricMean(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
+    template <typename T> std::optional<double> geometricMean(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
     {
         // The geometric mean of n elements is defined as the n-th root of the product of all n elements
         T product{ 1 };
         for (auto value : data)
             product *= value;
 
-        return data.empty()
-            ? std::numeric_limits<T>::quiet_NaN()
-            : std::pow(product, 1.0 / (double)data.size());
+        return data.empty()? 
+            std::nullopt :
+            std::optional<double>(std::pow(product, 1.0 / (double)data.size()));
     }
 
     template <typename T> double arithmeticMean(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
