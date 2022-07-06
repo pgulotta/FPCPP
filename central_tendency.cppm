@@ -26,38 +26,41 @@ export namespace central_tendency
   {
     template <typename T> std::optional<double> rms(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
     {
-        // The RMS or root mean square is defined as square root of the arithmetic mean of the squares of the elements.
-        T sum_squares{};
-        for (auto value : data)
-            sum_squares += square(value);
+        if (data.empty())
+            return std::nullopt;
 
-        return data.empty() ? 
-           std::nullopt : 
-           std:: optional<double>( std::sqrt(sum_squares / (double)data.size()));
+        // The RMS or root mean square is defined as square root of the arithmetic mean of the squares of the elements.
+        T sumSquares{};
+        for (auto value : data)
+            sumSquares += square(value);
+
+        return std:: optional<double>( std::sqrt(sumSquares / (double)data.size()));
     }
 
     template <typename T> std::optional<double> geometricMean(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
     {
+        if (data.empty())
+            return std::nullopt;
+
         // The geometric mean of n elements is defined as the n-th root of the product of all n elements
         T product{ 1 };
         for (auto value : data)
             product *= value;
 
-        return data.empty()? 
-            std::nullopt :
-            std::optional<double>(std::pow(product, 1.0 / (double)data.size()));
+        return std::optional<double>(std::pow(product, 1.0 / (double)data.size()));
     }
 
     template <typename T> std::optional<double> arithmeticMean(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
     {
+        if (data.empty())
+            return std::nullopt;
+
         // The arithmetic mean, the most commonly used average, is defined as the sum of all elements divided by the number of elements.
         T sum{};
         for (auto value : data)
             sum += value;
 
-        return data.empty() ? 
-            std::nullopt :
-            std::optional<double> (sum / (double)data.size());
+        return std::optional<double> (sum / (double)data.size());
     }
 
     template <typename T> std::optional<double> median(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
