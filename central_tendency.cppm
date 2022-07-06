@@ -60,7 +60,7 @@ export namespace central_tendency
             : sum / (double)data.size();
     }
 
-    template <typename T> double median(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
+    template <typename T> std::optional<double> median(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
     {
         // The median of an odd number of elements is the value in the middle position of these elements when they are sorted.
         // The median of an even number of elements is typically defined as the mean of the two middle elements in a sorted range.
@@ -69,9 +69,12 @@ export namespace central_tendency
         ranges::sort(sorted);
 
         const size_t mid = data.size() / 2;
-        return data.empty() ? std::numeric_limits<T>::quiet_NaN()
-            : data.size() % 2 == 1 ? sorted[mid]
-            : (sorted[mid - 1] + sorted[mid]) / 2.0;
+        if (data.empty())
+            return  std::numeric_limits<T>::quiet_NaN();
+       
+        return data.size() % 2 == 1 ?
+            std::optional<double>(sorted[mid])
+            : std::optional<double>((sorted[mid - 1] + sorted[mid]) / 2.0);
     }
 
     template <typename T> std::optional<T> mode(std::span<const T> data) requires std::floating_point<T> || std::integral<T>

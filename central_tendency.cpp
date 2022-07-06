@@ -43,8 +43,8 @@ namespace central_tendency
       assert(compare_float(root_mean_square, 7.51664));
 
       auto median{ central_tendency::averages::median<int>(values) };
-      std::cout << "Median: " << median << std::endl;
-      assert(compare_float(median, 6.5));
+      std::cout << "Median: " << median.value() << std::endl;
+      assert(compare_float(median.value(), 6.5));
 
       auto mode{ central_tendency::averages::mode<int>(values) };
       std::cout << "Mode: " << mode.value() << std::endl;
@@ -66,8 +66,8 @@ namespace central_tendency
       assert(compare_float(root_mean_square2, 10.));
 
       auto median2{ central_tendency::averages::median<int>(values2) };
-      std::cout << "Median: " << median2 << std::endl;
-      assert(compare_float(median2, 6.));
+      std::cout << "Median: " << median2.value() << std::endl;
+      assert(compare_float(median2.value(), 6.));
 
       auto mode2{ central_tendency::averages::mode<int>(values2) };
       assert(!mode2.has_value());
@@ -92,8 +92,8 @@ namespace central_tendency
       assert(compare_float(root_mean_square, 8.75892));
  
       auto median{central_tendency::averages::median<double>(values)};
-      std::cout << "Median: " << median << std::endl;
-      assert(compare_float(median, 9.30000));
+      std::cout << "Median: " << median.value() << std::endl;
+      assert(compare_float(median.value(), 9.30000));
 
       auto mode{central_tendency::averages::mode<double>(values)};
       std::cout << "Mode: " << mode.value() << std::endl;
@@ -108,7 +108,7 @@ namespace central_tendency
       auto root_mean_square2{ central_tendency::averages::rms<double>(values2) };
       std::cout << "Root mean square: " << root_mean_square2 << std::endl;
       auto median2{ central_tendency::averages::median<double>(values2) };
-      std::cout << "Median: " << median2 << std::endl;
+      std::cout << "Median: " << median2.value() << std::endl;
       auto mode2{ central_tendency::averages::mode<double>(values2) };
       std::cout << "Mode: " << mode2.value () << std::endl;
       assert(compare_float(mode2.value(), 2.345));
