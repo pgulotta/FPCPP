@@ -7,6 +7,7 @@ import <iostream>;
 import <limits>;   // For std::numeric_limits<T>::quiet_NaN()
 import <ranges>;
 import <algorithm>;
+import <optional>;
 
 namespace ranges = std::ranges;
 namespace views =  std::ranges::views;
@@ -73,10 +74,10 @@ export namespace central_tendency
             : (sorted[mid - 1] + sorted[mid]) / 2.0;
     }
 
-    template <typename T> T mode(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
+    template <typename T> std::optional<T> mode(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
     {
         if (data.empty())
-            return std::numeric_limits<T>::quiet_NaN();
+            return std::nullopt;
 
         std::vector<T> dataCopy;
         ranges::copy(data, std::back_inserter(dataCopy));
@@ -97,9 +98,9 @@ export namespace central_tendency
         if (counted.size() != 1)
         {
             if ((counted.crbegin())->first == (++counted.crbegin())->first)
-                 return std::numeric_limits<T>::signaling_NaN();
+                return std::nullopt;
         }
-        return (counted.crbegin())->second;
+        return std::optional<T>(counted.crbegin()->second);
     }
 
     void test();

@@ -47,7 +47,7 @@ namespace central_tendency
       assert(compare_float(median, 6.5));
 
       auto mode{ central_tendency::averages::mode<int>(values) };
-      std::cout << "Mode: " << mode << std::endl;
+      std::cout << "Mode: " << mode.value() << std::endl;
       assert(mode == 1);
 
       const int values2[]{ 1,8, 14, 3, 4, 8, 21, 3 };
@@ -70,7 +70,7 @@ namespace central_tendency
       assert(compare_float(median2, 6.));
 
       auto mode2{ central_tendency::averages::mode<int>(values2) };
-      assert(mode2 == std::numeric_limits<int>::quiet_NaN());
+      assert(!mode2.has_value());
       std::cout << "Mode is not unique" << std::endl;
   }
 
@@ -96,8 +96,8 @@ namespace central_tendency
       assert(compare_float(median, 9.30000));
 
       auto mode{central_tendency::averages::mode<double>(values)};
-      std::cout << "Mode: " << mode << std::endl;
-      assert(compare_float(mode, 10.30000));
+      std::cout << "Mode: " << mode.value() << std::endl;
+      assert(compare_float(mode.value(), 10.30000));
 
       const double values2[]{ 2.345 };
       print(values2);
@@ -110,8 +110,8 @@ namespace central_tendency
       auto median2{ central_tendency::averages::median<double>(values2) };
       std::cout << "Median: " << median2 << std::endl;
       auto mode2{ central_tendency::averages::mode<double>(values2) };
-      std::cout << "Mode: " << mode2 << std::endl;
-      assert(compare_float(mode2, 2.345));
+      std::cout << "Mode: " << mode2.value () << std::endl;
+      assert(compare_float(mode2.value(), 2.345));
    
   }
 }
