@@ -24,16 +24,16 @@ export namespace central_tendency
 
   namespace averages
   {
-      template <typename T> double rms(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
+    template <typename T> std::optional<double> rms(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
     {
         // The RMS or root mean square is defined as square root of the arithmetic mean of the squares of the elements.
         T sum_squares{};
         for (auto value : data)
             sum_squares += square(value);
 
-        return data.empty()
-            ? std::numeric_limits<T>::quiet_NaN() 
-            : std::sqrt(sum_squares / (double)data.size());
+        return data.empty() ? 
+            std::nullopt : 
+           std:: optional<double>( std::sqrt(sum_squares / (double)data.size()));
     }
 
     template <typename T> double geometricMean(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
@@ -70,7 +70,7 @@ export namespace central_tendency
 
         const size_t mid = data.size() / 2;
         if (data.empty())
-            return  std::numeric_limits<T>::quiet_NaN();
+            return std::nullopt;
        
         return data.size() % 2 == 1 ?
             std::optional<double>(sorted[mid])
