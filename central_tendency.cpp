@@ -30,9 +30,9 @@ namespace central_tendency
       const int values[]{ 1,8, 14, 5, 10, 8, 1,1 };
       print(values);
 
-      double amean{ central_tendency::averages::arithmeticMean<int>(values) };
-      std::cout << "Arithmetic mean: " << amean << std::endl;
-      assert(amean == 6.0);
+      auto amean{ central_tendency::averages::arithmeticMean<int>(values) };
+      std::cout << "Arithmetic mean: " << amean.value() << std::endl;
+      assert(amean.value() == 6.0);
 
       auto gmean{ central_tendency::averages::geometricMean<int>(values) };
       std::cout << "Geometric mean: " << gmean.value() << std::endl;
@@ -53,9 +53,9 @@ namespace central_tendency
       const int values2[]{ 1,8, 14, 3, 4, 8, 21, 3 };
       print(values2);
 
-      double amean2{ central_tendency::averages::arithmeticMean<int>(values2) };
-      assert(amean2 == 7.75);
-      std::cout << "Arithmetic mean: " << amean2 << std::endl;
+      auto amean2{ central_tendency::averages::arithmeticMean<int>(values2) };
+      assert(amean2.value() == 7.75);
+      std::cout << "Arithmetic mean: " << amean2.value() << std::endl;
 
       auto gmean2{ central_tendency::averages::geometricMean<int>(values2) };
       assert(compare_float(gmean2.value(), 5.35616));
@@ -80,8 +80,8 @@ namespace central_tendency
       print(values);
 
       auto amean{ central_tendency::averages::arithmeticMean<double>(values) };
-      std::cout << "Arithmetic mean: " << amean << std::endl;
-      assert(compare_float(amean, 8.4875));
+      std::cout << "Arithmetic mean: " << amean.value() << std::endl;
+      assert(compare_float(amean.value(), 8.4875));
 
       auto gmean{ central_tendency::averages::geometricMean<double>(values) };
       std::cout << "Geometric mean: " << gmean.value() << std::endl;
@@ -102,7 +102,7 @@ namespace central_tendency
       const double values2[]{ 2.345 };
       print(values2);
       auto amean2{ central_tendency::averages::arithmeticMean<double>(values2) };
-      std::cout << "Arithmetic mean: " << amean2 << std::endl;
+      std::cout << "Arithmetic mean: " << amean2.value() << std::endl;
       auto gmean2{ central_tendency::averages::geometricMean<double>(values2) };
       std::cout << "Geometric mean: " << gmean2.value() << std::endl;
       auto root_mean_square2{ central_tendency::averages::rms<double>(values2) };

@@ -48,16 +48,16 @@ export namespace central_tendency
             std::optional<double>(std::pow(product, 1.0 / (double)data.size()));
     }
 
-    template <typename T> double arithmeticMean(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
+    template <typename T> std::optional<double> arithmeticMean(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
     {
         // The arithmetic mean, the most commonly used average, is defined as the sum of all elements divided by the number of elements.
         T sum{};
         for (auto value : data)
             sum += value;
 
-        return data.empty()
-            ? std::numeric_limits<int>::quiet_NaN() 
-            : sum / (double)data.size();
+        return data.empty() ? 
+            std::nullopt :
+            std::optional<double> (sum / (double)data.size());
     }
 
     template <typename T> std::optional<double> median(std::span<const T> data) requires std::floating_point<T> || std::integral<T>
