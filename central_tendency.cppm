@@ -8,6 +8,7 @@ import <limits>;   // For std::numeric_limits<T>::quiet_NaN()
 import <ranges>;
 import <algorithm>;
 import <optional>;
+import <numeric>;
 
 namespace ranges = std::ranges;
 namespace views =  std::ranges::views;
@@ -29,10 +30,13 @@ export namespace central_tendency
         if (data.empty())
             return std::nullopt;
 
-        // The RMS or root mean square is defined as square root of the arithmetic mean of the squares of the elements.
-        T sumSquares{};
-        for (auto value : data)
-            sumSquares += square(value);
+       //  The RMS or root mean square is defined as square root of the arithmetic mean of the squares of the elements.     
+        T sumSquares = std::accumulate(
+            data.begin(), data.end(), T{},
+            [](T previous_count, T x) {
+                return  previous_count + x * x;
+            }
+        );
 
         return std:: optional<double>( std::sqrt(sumSquares / (double)data.size()));
     }
