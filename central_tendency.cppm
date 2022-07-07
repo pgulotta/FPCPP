@@ -60,10 +60,8 @@ export namespace central_tendency
             return std::nullopt;
 
         // The arithmetic mean, the most commonly used average, is defined as the sum of all elements divided by the number of elements.
-        T sum{};
-        for (auto value : data)
-            sum += value;
-
+        T sum{ std::accumulate(data.begin(), data.end(),T{}) };
+   
         return std::optional<double> (sum / (double)data.size());
     }
 
