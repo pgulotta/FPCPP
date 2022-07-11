@@ -31,7 +31,8 @@ export namespace central_tendency
             return std::nullopt;
 
        //  The RMS or root mean square is defined as square root of the arithmetic mean of the squares of the elements.     
-        T sumSquares = std::accumulate(
+     //   T sumSquares = std::accumulate(
+            T sumSquares = std::reduce(
             data.begin(), data.end(), T{},
             [](T previous_count, T x) {
                 return  previous_count + x * x;
@@ -47,7 +48,8 @@ export namespace central_tendency
             return std::nullopt;
 
         // The geometric mean of n elements is defined as the n-th root of the product of all n elements
-        T product = std::accumulate(data.begin(), data.end(), T{1}, std::multiplies<>());
+     //   T product = std::accumulate(data.begin(), data.end(), T{1}, std::multiplies<>());
+        T product = std::reduce(data.begin(), data.end(), T{1}, std::multiplies<>());
         return std::optional<double>(std::pow(product, 1.0 / (double)data.size()));
     }
 
@@ -57,7 +59,8 @@ export namespace central_tendency
             return std::nullopt;
 
         // The arithmetic mean, the most commonly used average, is defined as the sum of all elements divided by the number of elements.
-        T sum{ std::accumulate(data.begin(), data.end(),T{}) };
+       // T sum{ std::accumulate(data.begin(), data.end(),T{}) };
+        T sum{ std::reduce(data.begin(), data.end(),T{}) };
         return std::optional<double> (sum / (double)data.size());
     }
 
